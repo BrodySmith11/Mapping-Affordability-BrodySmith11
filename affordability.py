@@ -6,6 +6,8 @@ Created on Wed Apr 20 08:06:43 2022
 """
 
 import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
 
 
 data = pd.read_csv('City-Affordability-Data.csv')
@@ -33,10 +35,23 @@ def assign_category(price_string):
         return 'low'
     elif price >= med_cost_lower and price < med_cost_upper:
         return 'medium'
-    else:
+    elif price >= high_cost_lower and price < high_cost_upper:
         return 'high'
+    elif price >= extreme_cost_lower and price < extreme_cost_upper:
+        return 'extreme'
+        
     
 data['Category'] = data['1B Price Cleaned'].apply(assign_category)
-print(data)
 
 
+data_gdf = gpd.GeoDataFrame(data, geometry = gpd.points_from_xy(data['lng'],data['lat']))
+
+#data_gdf.plot(column='Category', cmap = 'YlGnBu', markersize = 10, figsize = (10,10))
+data_gdf.explore(
+    column='City',
+    tooltip='City',
+    popup=True,
+    cmap='Set1',
+    style_kwds=dict(color='black')
+    )
+#data_gdf.to_file(filename = 'citycost.shp')
