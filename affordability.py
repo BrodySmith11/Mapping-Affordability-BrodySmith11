@@ -7,7 +7,10 @@ Created on Wed Apr 20 08:06:43 2022
 
 import pandas as pd
 
-income = int(input('Enter Post-Tax Yearly Income:\60n$'))
+
+data = pd.read_csv('City-Affordability-Data.csv')
+
+income = int(input('Enter Post-Tax Yearly Income:\n$'))
 print(income)
 monthly_income = income/12
 print(monthly_income)
@@ -21,6 +24,19 @@ med_cost_lower = monthly_income * .25
 med_cost_upper = monthly_income * .33
 high_cost_lower = monthly_income * .33
 high_cost_upper = monthly_income * .40
-extreme_lower = monthly_income * .40
-extreme_upper = monthly_income
+extreme_cost_lower = monthly_income * .40
+extreme_cost_upper = monthly_income
+
+def assign_category(price_string):
+    price = float(price_string)
+    if price >= low_cost_lower and price < low_cost_upper:
+        return 'low'
+    elif price >= med_cost_lower and price < med_cost_upper:
+        return 'medium'
+    else:
+        return 'high'
+    
+data['Category'] = data['1B Price Cleaned'].apply(assign_category)
+print(data)
+
 
