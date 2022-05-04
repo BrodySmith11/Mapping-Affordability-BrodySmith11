@@ -48,9 +48,18 @@ data['Category'] = data['1B Price Cleaned'].apply(assign_category)
 
 data_gdf = gpd.GeoDataFrame(data, geometry = gpd.points_from_xy(data['lng'],data['lat']))
 
-us_boundary_map = states.boundary.plot(figsize = (18,12), color="Gray")
-data_gdf.plot(ax=us_boundary_map, color='Rd')
+#us_boundary_map = states.boundary.plot(figsize = (10,10), color="Gray")
+#data_gdf.plot(ax=us_boundary_map, color='DarkGray')
 
-#data_gdf.plot(column='Category', cmap = 'YlGnBu', markersize = 10, figsize = (10,10))
+fig, ax = plt.subplots(figsize = (10,6))
+ax.set_xlim(-130,-60)
+ax.set_ylim(20,50)
+us_boundary_map = states.boundary.plot(figsize = (10,10), color="Gray", ax=ax)
+data_gdf.plot('Category', ax=us_boundary_map, cmap='autumn')
 
-#data_gdf.to_file(filename = 'citycost.shp')
+fig.savefig("City-Rental-Affordability-Map.png")
+
+
+
+
+
