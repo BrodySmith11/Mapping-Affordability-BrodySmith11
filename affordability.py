@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 
 
 data = pd.read_csv('City-Affordability-Data.csv')
+states = gpd.read_file('cb_2021_us_state_5m.shp')
+
 
 income = int(input('Enter Post-Tax Yearly Income:\n$'))
 print(income)
@@ -46,12 +48,9 @@ data['Category'] = data['1B Price Cleaned'].apply(assign_category)
 
 data_gdf = gpd.GeoDataFrame(data, geometry = gpd.points_from_xy(data['lng'],data['lat']))
 
+us_boundary_map = states.boundary.plot(figsize = (18,12), color="Gray")
+data_gdf.plot(ax=us_boundary_map, color='Rd')
+
 #data_gdf.plot(column='Category', cmap = 'YlGnBu', markersize = 10, figsize = (10,10))
-data_gdf.explore(
-    column='City',
-    tooltip='City',
-    popup=True,
-    cmap='Set1',
-    style_kwds=dict(color='black')
-    )
+
 #data_gdf.to_file(filename = 'citycost.shp')
