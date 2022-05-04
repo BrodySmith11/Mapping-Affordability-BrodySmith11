@@ -56,10 +56,14 @@ ax.set_xlim(-130,-60)
 ax.set_ylim(20,50)
 us_boundary_map = states.boundary.plot(figsize = (10,10), color="Gray", ax=ax)
 data_gdf.plot('Category', ax=us_boundary_map, cmap='autumn')
-
 fig.savefig("City-Rental-Affordability-Map.png")
 
-
+fig2, ax = plt.subplots(figsize = (10,6))
+ax.set_xlim(-130,-60)
+ax.set_ylim(20,50)
+us_boundary_map = states.boundary.plot(figsize = (10,10), color="Gray", ax=ax)
+data_gdf.plot('1B Y/Y%', ax=us_boundary_map, cmap='autumn')
+fig2.savefig("City-Rental-Growth-Map.png")
 
 
 
