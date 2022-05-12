@@ -10,7 +10,6 @@ import pandas as pd
 
 # import rental data
 raw = pd.read_csv('rental_data_100_cities.csv',dtype=str)
-print(raw)
 
 # filter data to only needed data
 ### needed data includes 
@@ -21,10 +20,7 @@ rentals_trimmed = rentals_trimmed.drop(columns='2B M/M%')
 rentals_trimmed = rentals_trimmed.drop(columns='2B Y/Y%')
 rentals_trimmed['1B Price Cleaned'] = (rentals_trimmed['1B Price'].str.replace('$','').str.replace(',','').str.replace(' ',''))
 rentals_trimmed = rentals_trimmed.drop(columns='1B Price')
-#for index, name in rentals_trimmed['City'].iteritems():
-  #  name = name[0:name.find(',')]
-  #  print(name)
-   # rentals_trimmed['City'][index] = name
+
 print(rentals_trimmed)
 
 # add location data to cities
